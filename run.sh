@@ -1,5 +1,3 @@
-#!/bin/bash
-
 case "$1" in
   build_generator)
     echo "Сборка образа generator..."
@@ -21,37 +19,45 @@ case "$1" in
     echo "Готово: local_data/data.csv"
     ;;
 
-  *)
-    echo "Использование: ./run.sh [build_generator | run_generator | create_local_data]"
-    exit 1
-    ;;
-esac
-
-    build_reporter)
+  build_reporter)
+    echo "Сборка образа reporter..."
     docker build -t reporter ./reporter
+    echo "Образ собран."
     ;;
-    run_reporter)
+
+  run_reporter)
+    echo "Запуск контейнера, файл появится в data/report.html..."
     mkdir -p data
     docker run --rm -v "$(pwd)/data:/data" reporter
+    echo "Готово: data/report.html"
     ;;
 
-    structure)
+  structure)
     find . -not -path './.git/*' | sort | sed 's|[^/]*/|  |g'
     ;;
-    clear_data)
+
+  clear_data)
     rm -f data/*.csv data/*.html
     echo "data/ очищена"
     ;;
-    inside_generator)
+
+  inside_generator)
     mkdir -p data
     docker run --rm -v "$(pwd)/data:/data" generator ls -la /data
     ;;
-    inside_reporter)
+
+  inside_reporter)
     mkdir -p data
     docker run --rm -v "$(pwd)/data:/data" reporter ls -la /data
     ;;
 
-    report_server)
+  report_server)
     docker run --rm -d -p 8080:80 -v "$(pwd)/data:/usr/share/nginx/html:ro" nginx
-    echo "http://localhost:8080/report.html"
+    echo "Сервер запущен: http://localhost:8080/report.html"
     ;;
+
+  *)
+    echo "Использование: ./run.sh <команда>"
+    exit 1
+    ;;
+esac
