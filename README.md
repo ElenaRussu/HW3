@@ -1,39 +1,39 @@
 # HW3
 
-## Запуск генератора
+## Просмотр отчёта в браузере через GitHub Codespaces
+
+### Шаг 1 — клонируй репозиторий и открой в Codespaces
+
+1. Открыть репозиторий на GitHub
+2. Нажать **Code → Codespaces → Create codespace on main**
+3. Подождать, пока среда загрузится
+
+### Шаг 2 — сделай run.sh исполняемым
+
+```bash
+chmod +x run.sh
+```
+
+### Шаг 3 — сгенерируй данные и отчёт
 
 ```bash
 ./run.sh build_generator
 ./run.sh run_generator
-./run.sh create_local_data
-```
-
-## Запуск репортера
-
-```bash
 ./run.sh build_reporter
 ./run.sh run_reporter
 ```
 
-## Утилиты
+После этого в папке `data/` появятся файлы `data.csv` и `report.html`.
 
-```bash
-./run.sh structure
-./run.sh clear_data
-./run.sh inside_generator
-./run.sh inside_reporter
-```
-
-## Веб-сервер
+### Шаг 4 — запусти веб-сервер
 
 ```bash
 ./run.sh report_server
 ```
 
-Чтобы открыть отчёт в браузере через GitHub Codespaces:
+Команда запускает контейнер nginx, который раздаёт файлы из папки `data/` на порту 8080.
 
-1. Запустить `./run.sh report_server`
-2. Открыть вкладку **Ports** в VS Code
-3. Нажать **Add Port** и введи `8080`
-4. Нажать на значок глобуса — откроется браузер
-5. Добавить `/report.html` в конец URL
+### Шаг 5 — открой отчёт в браузере
+
+1. В VS Code внизу появится уведомление **"Your application running on port 8080 is available"** — написать **Open in Browser**. Если уведомление не появилось — открыть вкладку **Ports** (Ctrl+Shift+P → "Ports: Focus on Ports View"), найти порт 8080 и нажать на значок глобуса.
+2. В открывшейся вкладке браузера добавить `/report.html` в конец URL.
